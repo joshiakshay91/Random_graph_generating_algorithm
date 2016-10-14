@@ -12,13 +12,15 @@ class Graph{
 public:
   class Node{
   public:
+    Node();
+    ~Node();
     int color;
     int vName;
   };
   Graph(int);
   ~Graph();
   void Display();
-  void Grow(int);
+  void Grow(int, int, int);
 private:
   std::map<int,std::vector<Node> > AdjList;
   std::map<int, int> vertices;

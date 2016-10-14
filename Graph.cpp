@@ -18,7 +18,27 @@ Graph::Graph(int numVertex)
 }
 
 Graph::~Graph()
-{}
+{
+	int sizer=AdjList.size();
+	std::map<int,std::vector <Node> >::iterator it;
+	for(int i=0;i<sizer; i++)
+	{
+		it=AdjList.find(i);
+		AdjList.erase(it);
+	}
+	int LSize=vertices.size();
+	std::map<int,int>:: iterator itr;
+	for(int i=0;i<LSize;i++)
+	{
+		itr=vertices.find(i);
+		vertices.erase(itr);
+	}
+}
+
+Graph::Node::Node(){}
+
+Graph::Node::~Node(){}
+
 
 void Graph::Display()
 {
@@ -34,8 +54,10 @@ void Graph::Display()
 	}
 }
 
-void Graph::Grow(int size)
+void Graph::Grow(int size, int lP, int PP)
 {
+	int lossPercent=lP;
+	int ParentPercent=PP;
 	srand(time(NULL));
 	int diff=size-vertices.size();
 	for(int k=0;k<diff;k++)
@@ -51,6 +73,51 @@ void Graph::Grow(int size)
 		{
 			int n=AdjList[vSize][i].vName;
 			AdjList[n].push_back(m);
+		}
+		int iterations=AdjList[vSize].size();
+		int offset=0;
+		for(int z=0;z<AdjList[vSize].size();z++)
+		{
+			bool execute=false;
+			while(!execute)
+			{
+				int chance=rand()%100;
+				chance=chance+1;
+				if(chance<=lossPercent)
+				{
+					int roll=rand()%100;
+					roll=roll+1;
+					if(roll<=ParentPercent && (AdjList[loc].size()>1))
+					{//parent looses the node;
+						execute=true;
+						int n=AdjList[vSize][z].vName;
+						int destroy;
+						for(int m=0;m<AdjList[n].size();m++)
+						{
+							if(AdjList[n][m].vName==loc)
+							{
+								destroy=m;
+								break;
+							}
+						}
+						AdjList[n].erase(AdjList[n].begin()+destroy);
+						AdjList[loc].erase(AdjList[loc].begin()+(z-(offset)));
+						offset++;
+					}
+					else if(roll>ParentPercent && (AdjList[vSize].size()>1))
+					{//child looses the node;
+						execute=true;
+						int n=AdjList[vSize][z].vName;
+						AdjList[n].pop_back();
+						AdjList[vSize].erase(AdjList[vSize].begin()+(z));
+						offset--;
+					}
+				}
+				else
+				{
+					execute=true;
+				}
+			}
 		}
 	}
 }
