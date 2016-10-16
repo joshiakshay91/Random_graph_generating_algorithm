@@ -17,7 +17,7 @@ for i in {100..300..100}
       for k in {50..90..20}
       do
         perBias=$k;
-        for li in {1..1000..1}
+        for li in {1..10..1}
         do
           executor=$(./Grow $click $expansionSize $perLoss $perBias)
           mv ./output.txt ./recoloring/
@@ -29,13 +29,37 @@ for i in {100..300..100}
           echo $vary>> data.txt
         done
         puttit="$(./calc)"
-        puttit2=$(echo $puttit| awk '{print $1}')
-        coln=":"
-        slash="/"
-        FIRSTV=100;
-        chiBias=`expr $FIRSTV - $perBias`
-        echo -e $click'\t'$expansionSize'\t'$perLoss'\t'$perBias$slash$chiBias$coln'\t' $puttit2;
-        rm ./data.txt
+        fields=$(echo $puttit|awk --field-separator=" " "{ print NF }")
+        if [ "$fields" = "1" ]
+        then
+          puttit2=$(echo $puttit| awk '{print $1}')
+          coln=":"
+          slash="/"
+          FIRSTV=100;
+          chiBias=`expr $FIRSTV - $perBias`
+          echo -e $click'\t'$expansionSize'\t'$perLoss'\t'$perBias$slash$chiBias$coln'\t' $puttit2;
+          rm ./data.txt
+        elif [ "$fields" = "2" ]
+        then
+          puttit2=$(echo $puttit| awk '{print $1}')
+          puttit3=$(echo $puttit| awk '{print $2}')
+          coln=":"
+          slash="/"
+          FIRSTV=100;
+          chiBias=`expr $FIRSTV - $perBias`
+          echo -e $click'\t'$expansionSize'\t'$perLoss'\t'$perBias$slash$chiBias$coln'\t' $puttit2 $puttit3;
+          rm ./data.txt
+        else
+          puttit2=$(echo $puttit| awk '{print $1}')
+          puttit3=$(echo $puttit| awk '{print $2}')
+          puttit4=$(echo $puttit| awk '{print $3}')
+          coln=":"
+          slash="/"
+          FIRSTV=100;
+          chiBias=`expr $FIRSTV - $perBias`
+          echo -e $click'\t'$expansionSize'\t'$perLoss'\t'$perBias$slash$chiBias$coln'\t' $puttit2 $puttit3 $puttit4;
+          rm ./data.txt
+        fi
       done
       echo "                  "
     done
