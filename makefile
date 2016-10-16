@@ -1,4 +1,4 @@
-CXX = g++
+CXX = g++ -std=c++11
 
 Grow: Graph.o main.o
 		$(CXX) -o Grow Graph.o main.o

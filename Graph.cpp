@@ -54,6 +54,17 @@ void Graph::Display()
 	}
 }
 
+void Graph::printFile()
+{
+	ofstream data("output.txt");
+	map<int,std::vector<Node> >:: iterator it;
+	for(it=AdjList.begin();it!=AdjList.end();it++)
+	{
+		for(int i=0; i<it->second.size();i++)
+			data<<it->first<<" "<<it->second[i].vName<<endl;
+	}
+}
+
 void Graph::Grow(int size, int lP, int PP)
 {
 	int lossPercent=lP;

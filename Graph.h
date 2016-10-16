@@ -6,6 +6,7 @@
 #include <string>
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
+#include <fstream>
 
 using namespace std;
 
@@ -21,6 +22,7 @@ public:
   Graph(int);
   ~Graph();
   void Display();
+  void printFile();
   void Grow(int, int, int);
 private:
   std::map<int,std::vector<Node> > AdjList;
