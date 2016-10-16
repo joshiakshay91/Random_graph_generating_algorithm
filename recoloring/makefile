@@ -9,4 +9,4 @@ Graph.o: Graph.cpp Graph.h Vertex.h
 Vertex.o:Vertex.cpp Vertex.h
 
 clean:
-		rm -f *.o Greedy
+		rm -f *.o Greedy output.txt

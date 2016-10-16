@@ -8,4 +8,4 @@ main.o: main.cpp Graph.h
 Graph.o: Graph.cpp Graph.h
 
 clean:
-		rm -f *.o Grow
+		rm -f *.o Grow output.txt data.txt

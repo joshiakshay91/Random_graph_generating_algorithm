@@ -19,9 +19,9 @@ int main()
 		g.addEdge(v1,v2);
 	}
 	g.greedyColoring();
-	cout<<"Greedy Coloring:"<<g.getNoOfColors()<<" "<<g.validColoring()<<endl;
+	cout<<"Greedy Coloring: "<<g.getNoOfColors()<<" "<<g.validColoring()<<endl;
 	g.optimizeColoring();
-	cout<<"Optimised Coloring"<<g.getOptimisedNo()<<" "<<g.validColoring()<<endl;
+	cout<<"Optimised Coloring: "<<g.getOptimisedNo()<<" "<<g.validColoring()<<endl;
 	g.print();
 	return 0;
 }
