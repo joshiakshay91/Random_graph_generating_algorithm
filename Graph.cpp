@@ -74,50 +74,95 @@ void Graph::Grow(int size, int lP, int PP)
 			int n=AdjList[vSize][i].vName;
 			AdjList[n].push_back(m);
 		}
-		int iterations=AdjList[vSize].size();
-		int offset=0;
-		for(int z=0;z<AdjList[vSize].size();z++)
+		bool successFlag=false;
+		while(!successFlag)
 		{
-			bool execute=false;
-			while(!execute)
+			while(!myListParent.empty())	myListParent.pop_front();
+			while(!myListChild.empty())	myListChild.pop_front();
+			successFlag=loopThrough(loc,vSize,lossPercent,ParentPercent);
+		}
+		if(successFlag)
+		{
+			AdjList[loc]=TempList[0];
+			AdjList[vSize]=TempList[1];
+			TempList.erase(0);
+			TempList.erase(1);
+			while(!myListParent.empty())
+		{
+			int n=myListParent.front();
+			myListParent.pop_front();
+			int destroy;
+			for(int m=0;m<AdjList[n].size();m++)
 			{
-				int chance=rand()%100;
-				chance=chance+1;
-				if(chance<=lossPercent)
+				if(AdjList[n][m].vName==loc)
 				{
-					int roll=rand()%100;
-					roll=roll+1;
-					if(roll<=ParentPercent && (AdjList[loc].size()>1))
-					{//parent looses the node;
-						execute=true;
-						int n=AdjList[vSize][z].vName;
-						int destroy;
-						for(int m=0;m<AdjList[n].size();m++)
-						{
-							if(AdjList[n][m].vName==loc)
-							{
-								destroy=m;
-								break;
-							}
-						}
-						AdjList[n].erase(AdjList[n].begin()+destroy);
-						AdjList[loc].erase(AdjList[loc].begin()+(z-(offset)));
-						offset++;
+					destroy=m;
+					break;
+				}
+			}
+			AdjList[n].erase(AdjList[n].begin()+destroy);
+			if(AdjList[n].size()==0)	cout<<"Error here:"<<endl;
+		}
+		while(!myListChild.empty())
+		{
+			int n=myListChild.front();
+			myListChild.pop_front();
+		//	AdjList[n].pop_back();
+			int destroy;
+			for(int m=0;m<AdjList[n].size();m++)
+			{
+				if(AdjList[n][m].vName==vSize)
+				{
+					destroy=m;
+					break;
+				}
+			}
+			AdjList[n].erase(AdjList[n].begin()+destroy);
+				if(AdjList[n].size()==0)	cout<<"Error here2:"<<endl;
+		}
+
+		}
+	}
+}
+
+bool Graph::loopThrough(int parentN, int childN, int lossPercent, int ParentPercent)
+{
+	TempList[0] = AdjList[parentN];
+	TempList[1] = AdjList[childN];
+	int offset=0;
+	for(int z=0;z<TempList[1].size();z++)
+	{
+			int chance= rand()%100;
+			chance=chance+1;
+			if (chance<=lossPercent)
+			{
+				int roll=rand()%100;
+				roll=roll+1;
+				if(roll<=ParentPercent )
+				{
+					//parent looses the node
+					if((TempList[0].size())<= 1)
+					{
+						return false;//its going to delete the whole thing return and redo
 					}
-					else if(roll>ParentPercent && (AdjList[vSize].size()>1))
-					{//child looses the node;
-						execute=true;
-						int n=AdjList[vSize][z].vName;
-						AdjList[n].pop_back();
-						AdjList[vSize].erase(AdjList[vSize].begin()+(z));
-						offset--;
-					}
+					int n=TempList[1][z].vName;
+					myListParent.push_back(n);
+					TempList[0].erase(TempList[0].begin()+(z-(offset)));
+					offset++;
 				}
 				else
 				{
-					execute=true;
+					//child looses the node
+					if((TempList[1].size())<= 1)
+					{return false;//its going to delete the whole thing return and redo
+					}
+					int n= TempList[1][z].vName;
+					myListChild.push_back(n);
+					TempList[1].erase(TempList[1].begin()+(z));
+					offset--;
 				}
 			}
-		}
 	}
+	return true;
+	/////
 }
