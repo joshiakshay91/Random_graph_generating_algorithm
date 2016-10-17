@@ -17,7 +17,7 @@ for i in {100..300..100}
       for k in {50..90..20}
       do
         perBias=$k;
-        for li in {1..10..1}
+        for li in {1..1000..1}
         do
           executor=$(./Grow $click $expansionSize $perLoss $perBias)
           mv ./output.txt ./recoloring/

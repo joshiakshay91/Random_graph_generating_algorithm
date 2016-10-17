@@ -17,8 +17,8 @@ int main()
   }
   for(std::map<int, vector<int> >::iterator it=map.begin();it!=map.end();it++)
   {
-    double val=((float(map[it->first].size()))/(float (counter)));
-    cout<<"("<<it->first<<"-"<<setprecision(2)<<val<<")"<<"\t";
+    float val=((float(map[it->first].size()))/(float (counter)));
+    cout<<"("<<it->first<<"--"<<setprecision(2)<<val<<")"<<"\t";
   }
   cout<<endl;
   return 0;

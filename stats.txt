@@ -1,7 +1,0 @@
-g++ -std=c++11 -c -o Graph.o Graph.cpp g++ -std=c++11 -c -o main.o main.cpp g++ -std=c++11 -o Grow Graph.o main.o
-g++ -std=c++11 -c -o main.o main.cpp g++ -std=c++11 -c -o Graph.o Graph.cpp g++ -std=c++11 -c -o Vertex.o Vertex.cpp g++ -std=c++11 -o Greedy main.o Graph.o Vertex.o
-11	100	10	50/50:	 (10-0.017)
-11	100	10	70/30:	 (10-0.01)
-11	100	10	90/10:	 (11-0.017)
-                  
-11	100	20	50/50:	 (10-0.033)
