@@ -4,7 +4,7 @@ cd ./recoloring;
 echo `make`
 cd ..
 maker=$(g++ calculator.cpp -o calc)
-click=11;
+click=12;
 expansionSize=100;
 perLoss=10;
 perBias=50;
